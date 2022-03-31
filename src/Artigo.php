@@ -9,6 +9,14 @@ class Artigo
     {
         $this->mysql = $mysql;
     }
+
+    public function adicionar(string $titulo, string $conteudo): void
+    {
+        $insereArtigo = $this->mysql->prepare('INSERT INTO artigos(titulo, conteudo) VALUES(?,?);');
+        $insereArtigo->bind_param('ss', $titulo, $conteudo);
+        $insereArtigo->execute();
+    }
+
     public function exibirTodos():array
     {
 
@@ -28,6 +36,7 @@ class Artigo
         $artigo = $selecionaArtigo->get_result()->fetch_assoc();
         return $artigo;
     }
+
 }
 
 ?>

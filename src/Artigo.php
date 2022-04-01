@@ -17,7 +17,14 @@ class Artigo
         $insereArtigo->execute();
     }
 
-    public function exibirTodos():array
+    public function remover(string $id): void
+    {
+        $removerArtigo = $this->mysql->prepare('DELETE FROM artigos WHERE id = ?');
+        $removerArtigo->bind_param('s', $id);
+        $removerArtigo->execute();
+    }
+
+    public function exibirTodos(): array
     {
 
         $resultado = $this->mysql->query('SELECT id, titulo, conteudo FROM artigos;');
@@ -27,7 +34,7 @@ class Artigo
         return $artigos;
     }
 
-    public function encontrarPorId(string $id):array
+    public function encontrarPorId(string $id): array
     {
         $selecionaArtigo = $this->mysql->prepare("SELECT id, titulo, conteudo FROM artigos WHERE id = ?");
         //bind_param aguarda dois parametros o tipo da variavel que vai vim e a variavel.
